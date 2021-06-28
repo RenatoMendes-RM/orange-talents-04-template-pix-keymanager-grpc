@@ -1,17 +1,17 @@
 package br.com.zup.rmendes.pix
 
-
 import io.micronaut.validation.validator.constraints.EmailValidator
 import org.hibernate.validator.internal.constraintvalidators.hv.br.CPFValidator
 
 enum class TipoDeChave {
+
     CPF {
         override fun valida(chave: String?): Boolean {
             if (chave.isNullOrBlank()) {
                 return false
             }
 
-            if (!chave.matches("^[0-9]{11}$".toRegex())) {
+            if (!chave.matches("^[0-9]{11}\$".toRegex())) {
                 return false
             }
 
@@ -34,18 +34,12 @@ enum class TipoDeChave {
             if (chave.isNullOrBlank()) {
                 return false
             }
-            return EmailValidator().run {
-                initialize(null)
-                isValid(chave, null)
-            }
+            return chave.matches("^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.?([a-z]+)?\$".toRegex())
         }
     },
     ALEATORIA {
-        override fun valida(chave: String?) = chave.isNullOrBlank()
-                // se for aleatoria, não deve ser preenchida pelo solicitante.
+        override fun valida(chave: String?) = chave.isNullOrBlank() // não deve se preenchida
     };
 
-    // função abstrata é criada para usar polimorfismo, conforme acima,
-    // na validação de acordo com o tipo de chave
     abstract fun valida(chave: String?): Boolean
 }
