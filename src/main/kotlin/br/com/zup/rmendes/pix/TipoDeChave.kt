@@ -27,6 +27,7 @@ enum class TipoDeChave {
                 return false
             }
             return chave.matches("^\\+[1-9][0-9]\\d{1,14}\$".toRegex())
+
         }
     },
     EMAIL {
@@ -35,6 +36,10 @@ enum class TipoDeChave {
                 return false
             }
             return chave.matches("^[a-z0-9.]+@[a-z0-9]+\\.[a-z]+\\.?([a-z]+)?\$".toRegex())
+     /*       return EmailValidator().run {
+                initialize(null)
+                isValid(chave, null)
+            }*/
         }
     },
     ALEATORIA {
